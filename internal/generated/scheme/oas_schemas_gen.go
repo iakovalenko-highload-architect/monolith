@@ -603,3 +603,20 @@ func (s *UserRegisterPostReq) SetPassword(val OptString) {
 type UserRegisterPostServiceUnavailable R5xxHeaders
 
 func (*UserRegisterPostServiceUnavailable) userRegisterPostRes() {}
+
+// UserSearchGetBadRequest is response for UserSearchGet operation.
+type UserSearchGetBadRequest struct{}
+
+func (*UserSearchGetBadRequest) userSearchGetRes() {}
+
+type UserSearchGetInternalServerError R5xxHeaders
+
+func (*UserSearchGetInternalServerError) userSearchGetRes() {}
+
+type UserSearchGetOKApplicationJSON []User
+
+func (*UserSearchGetOKApplicationJSON) userSearchGetRes() {}
+
+type UserSearchGetServiceUnavailable R5xxHeaders
+
+func (*UserSearchGetServiceUnavailable) userSearchGetRes() {}

@@ -9,6 +9,7 @@ import (
 	"monolith/internal/api/handlers/login"
 	"monolith/internal/api/handlers/user_get_by_id"
 	"monolith/internal/api/handlers/user_register"
+	"monolith/internal/api/handlers/user_search"
 	"monolith/internal/storage"
 	"monolith/internal/usecase/auth_manager"
 	"monolith/internal/usecase/hash_manager"
@@ -32,10 +33,12 @@ func main() {
 	loginHandler := login.New(authManager)
 	userRegisterHandler := user_register.New(authManager)
 	userGetByIDHandler := user_get_by_id.New(user_manager.New(userStorage))
+	userSearchHandler := user_search.New(user_manager.New(userStorage))
 
 	e.POST("/login", loginHandler.Handle)
 	e.POST("/user/register", userRegisterHandler.Handle)
 	e.GET("/user/get/:id", userGetByIDHandler.Handle)
+	e.GET("/user/search", userSearchHandler.Handle)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

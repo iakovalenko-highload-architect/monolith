@@ -12,3 +12,7 @@ type UserGetIDGetRes interface {
 type UserRegisterPostRes interface {
 	userRegisterPostRes()
 }
+
+type UserSearchGetRes interface {
+	userSearchGetRes()
+}

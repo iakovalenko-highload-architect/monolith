@@ -87,3 +87,106 @@ func decodeUserGetIDGetParams(args [1]string, argsEscaped bool, r *http.Request)
 	}
 	return params, nil
 }
+
+// UserSearchGetParams is parameters of GET /user/search operation.
+type UserSearchGetParams struct {
+	// Условие поиска по имени.
+	FirstName string
+	// Условие поиска по фамилии.
+	LastName string
+}
+
+func unpackUserSearchGetParams(packed middleware.Parameters) (params UserSearchGetParams) {
+	{
+		key := middleware.ParameterKey{
+			Name: "first_name",
+			In:   "query",
+		}
+		params.FirstName = packed[key].(string)
+	}
+	{
+		key := middleware.ParameterKey{
+			Name: "last_name",
+			In:   "query",
+		}
+		params.LastName = packed[key].(string)
+	}
+	return params
+}
+
+func decodeUserSearchGetParams(args [0]string, argsEscaped bool, r *http.Request) (params UserSearchGetParams, _ error) {
+	q := uri.NewQueryDecoder(r.URL.Query())
+	// Decode query: first_name.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "first_name",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.FirstName = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "first_name",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	// Decode query: last_name.
+	if err := func() error {
+		cfg := uri.QueryParameterDecodingConfig{
+			Name:    "last_name",
+			Style:   uri.QueryStyleForm,
+			Explode: true,
+		}
+
+		if err := q.HasParam(cfg); err == nil {
+			if err := q.DecodeParam(cfg, func(d uri.Decoder) error {
+				val, err := d.DecodeValue()
+				if err != nil {
+					return err
+				}
+
+				c, err := conv.ToString(val)
+				if err != nil {
+					return err
+				}
+
+				params.LastName = c
+				return nil
+			}); err != nil {
+				return err
+			}
+		} else {
+			return validate.ErrFieldRequired
+		}
+		return nil
+	}(); err != nil {
+		return params, &ogenerrors.DecodeParamError{
+			Name: "last_name",
+			In:   "query",
+			Err:  err,
+		}
+	}
+	return params, nil
+}
