@@ -1,4 +1,4 @@
-package user_manager
+package user_search
 
 import (
 	"context"
@@ -6,7 +6,6 @@ import (
 	"monolith/internal/models"
 )
 
-type userStorage interface {
-	FindByUserID(ctx context.Context, userID string) (*models.User, error)
+type userGetter interface {
 	Search(ctx context.Context, firstName string, secondName string) ([]models.User, error)
 }

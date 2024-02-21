@@ -41,3 +41,12 @@ func (UnimplementedHandler) UserGetIDGet(ctx context.Context, params UserGetIDGe
 func (UnimplementedHandler) UserRegisterPost(ctx context.Context, req OptUserRegisterPostReq) (r UserRegisterPostRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
+
+// UserSearchGet implements GET /user/search operation.
+//
+// Поиск анкет.
+//
+// GET /user/search
+func (UnimplementedHandler) UserSearchGet(ctx context.Context, params UserSearchGetParams) (r UserSearchGetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}

@@ -29,3 +29,12 @@ func (u *User) GetByID(ctx context.Context, id string) (*models.User, error) {
 
 	return user, nil
 }
+
+func (u *User) Search(ctx context.Context, firstName string, secondName string) ([]models.User, error) {
+	users, err := u.userStorage.Search(ctx, firstName, secondName)
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}

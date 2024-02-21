@@ -28,6 +28,12 @@ type Handler interface {
 	//
 	// POST /user/register
 	UserRegisterPost(ctx context.Context, req OptUserRegisterPostReq) (UserRegisterPostRes, error)
+	// UserSearchGet implements GET /user/search operation.
+	//
+	// Поиск анкет.
+	//
+	// GET /user/search
+	UserSearchGet(ctx context.Context, params UserSearchGetParams) (UserSearchGetRes, error)
 }
 
 // Server implements http server based on OpenAPI v3 specification and

@@ -12,6 +12,8 @@ services:
       - ./db/master/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - app-network
+    ports:
+      - "5432:5432"
   monolith:
     image: ghcr.io/iakovalenko-highload-architect/monolith:latest
     container_name: monolith
