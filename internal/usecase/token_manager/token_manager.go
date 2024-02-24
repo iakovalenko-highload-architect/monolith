@@ -10,19 +10,19 @@ const (
 )
 
 type TokenManager struct {
-	config       Config
-	tokenCreator tokenCreator
+	config     Config
+	jwtManager jwtManager
 }
 
-func New(tokenCreator tokenCreator, config Config) *TokenManager {
+func New(tokenCreator jwtManager, config Config) *TokenManager {
 	return &TokenManager{
-		tokenCreator: tokenCreator,
-		config:       config,
+		jwtManager: tokenCreator,
+		config:     config,
 	}
 }
 
 func (m *TokenManager) CreateAuthToken(userID string) (string, error) {
-	accessToken, err := m.tokenCreator.CreateToken(
+	accessToken, err := m.jwtManager.CreateToken(
 		m.config.PrivateKey,
 		m.config.TtlAccessToken,
 		Data{
@@ -33,4 +33,16 @@ func (m *TokenManager) CreateAuthToken(userID string) (string, error) {
 	}
 
 	return accessToken, nil
+}
+
+func (m *TokenManager) ExtractUserID(token string) (string, error) {
+	payload, err := m.jwtManager.ExtractTokenData(
+		m.config.PublicKey,
+		token,
+	)
+	if err != nil {
+		return "", fmt.Errorf("failed extract token data: %w", err)
+	}
+
+	return payload.(map[string]interface{})["user_id"].(string), nil
 }

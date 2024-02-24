@@ -6,7 +6,99 @@ import (
 	"time"
 )
 
+type BearerAuth struct {
+	Token string
+}
+
+// GetToken returns the value of Token.
+func (s *BearerAuth) GetToken() string {
+	return s.Token
+}
+
+// SetToken sets the value of Token.
+func (s *BearerAuth) SetToken(val string) {
+	s.Token = val
+}
+
 type BirthDate time.Time
+
+// Ref: #/components/schemas/DialogMessage
+type DialogMessage struct {
+	From UserId            `json:"from"`
+	To   UserId            `json:"to"`
+	Text DialogMessageText `json:"text"`
+}
+
+// GetFrom returns the value of From.
+func (s *DialogMessage) GetFrom() UserId {
+	return s.From
+}
+
+// GetTo returns the value of To.
+func (s *DialogMessage) GetTo() UserId {
+	return s.To
+}
+
+// GetText returns the value of Text.
+func (s *DialogMessage) GetText() DialogMessageText {
+	return s.Text
+}
+
+// SetFrom sets the value of From.
+func (s *DialogMessage) SetFrom(val UserId) {
+	s.From = val
+}
+
+// SetTo sets the value of To.
+func (s *DialogMessage) SetTo(val UserId) {
+	s.To = val
+}
+
+// SetText sets the value of Text.
+func (s *DialogMessage) SetText(val DialogMessageText) {
+	s.Text = val
+}
+
+type DialogMessageText string
+
+type DialogUserIDListGetInternalServerError R5xxHeaders
+
+func (*DialogUserIDListGetInternalServerError) dialogUserIDListGetRes() {}
+
+type DialogUserIDListGetOKApplicationJSON []DialogMessage
+
+func (*DialogUserIDListGetOKApplicationJSON) dialogUserIDListGetRes() {}
+
+type DialogUserIDListGetServiceUnavailable R5xxHeaders
+
+func (*DialogUserIDListGetServiceUnavailable) dialogUserIDListGetRes() {}
+
+type DialogUserIDSendPostInternalServerError R5xxHeaders
+
+func (*DialogUserIDSendPostInternalServerError) dialogUserIDSendPostRes() {}
+
+// DialogUserIDSendPostOK is response for DialogUserIDSendPost operation.
+type DialogUserIDSendPostOK struct{}
+
+func (*DialogUserIDSendPostOK) dialogUserIDSendPostRes() {}
+
+type DialogUserIDSendPostReq struct {
+	Text DialogMessageText `json:"text"`
+}
+
+// GetText returns the value of Text.
+func (s *DialogUserIDSendPostReq) GetText() DialogMessageText {
+	return s.Text
+}
+
+// SetText sets the value of Text.
+func (s *DialogUserIDSendPostReq) SetText(val DialogMessageText) {
+	s.Text = val
+}
+
+type DialogUserIDSendPostServiceUnavailable R5xxHeaders
+
+func (*DialogUserIDSendPostServiceUnavailable) dialogUserIDSendPostRes() {}
 
 // LoginPostBadRequest is response for LoginPost operation.
 type LoginPostBadRequest struct{}
@@ -107,6 +199,52 @@ func (o OptBirthDate) Get() (v BirthDate, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptBirthDate) Or(d BirthDate) BirthDate {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptDialogUserIDSendPostReq returns new OptDialogUserIDSendPostReq with value set to v.
+func NewOptDialogUserIDSendPostReq(v DialogUserIDSendPostReq) OptDialogUserIDSendPostReq {
+	return OptDialogUserIDSendPostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptDialogUserIDSendPostReq is optional DialogUserIDSendPostReq.
+type OptDialogUserIDSendPostReq struct {
+	Value DialogUserIDSendPostReq
+	Set   bool
+}
+
+// IsSet returns true if OptDialogUserIDSendPostReq was set.
+func (o OptDialogUserIDSendPostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptDialogUserIDSendPostReq) Reset() {
+	var v DialogUserIDSendPostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptDialogUserIDSendPostReq) SetTo(v DialogUserIDSendPostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptDialogUserIDSendPostReq) Get() (v DialogUserIDSendPostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptDialogUserIDSendPostReq) Or(d DialogUserIDSendPostReq) DialogUserIDSendPostReq {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -342,6 +480,18 @@ func (o OptUserRegisterPostReq) Or(d UserRegisterPostReq) UserRegisterPostReq {
 	}
 	return d
 }
+
+// Ref: #/components/responses/400
+type R400 struct{}
+
+func (*R400) dialogUserIDListGetRes()  {}
+func (*R400) dialogUserIDSendPostRes() {}
+
+// Ref: #/components/responses/401
+type R401 struct{}
+
+func (*R401) dialogUserIDListGetRes()  {}
+func (*R401) dialogUserIDSendPostRes() {}
 
 type R5xx struct {
 	// Описание ошибки.

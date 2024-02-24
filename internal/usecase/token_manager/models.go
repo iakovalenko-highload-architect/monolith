@@ -5,6 +5,7 @@ import "time"
 type Config struct {
 	TtlAccessToken time.Duration
 	PrivateKey     string
+	PublicKey      string
 }
 
 type Data struct {

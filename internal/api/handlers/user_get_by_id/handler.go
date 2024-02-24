@@ -35,7 +35,7 @@ func (h *Handler) Handle(c echo.Context) error {
 		default:
 			return c.JSON(http.StatusInternalServerError, scheme.R5xx{
 				Message:   err.Error(),
-				RequestID: scheme.NewOptString(""),
+				RequestID: scheme.NewOptString(c.Request().Header.Get(echo.HeaderXRequestID)),
 				Code:      scheme.NewOptInt(500),
 			})
 		}
