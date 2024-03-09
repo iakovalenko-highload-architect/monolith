@@ -13,6 +13,20 @@ type UnimplementedHandler struct{}
 
 var _ Handler = UnimplementedHandler{}
 
+// DialogUserIDListGet implements GET /dialog/{user_id}/list operation.
+//
+// GET /dialog/{user_id}/list
+func (UnimplementedHandler) DialogUserIDListGet(ctx context.Context, params DialogUserIDListGetParams) (r DialogUserIDListGetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// DialogUserIDSendPost implements POST /dialog/{user_id}/send operation.
+//
+// POST /dialog/{user_id}/send
+func (UnimplementedHandler) DialogUserIDSendPost(ctx context.Context, req OptDialogUserIDSendPostReq, params DialogUserIDSendPostParams) (r DialogUserIDSendPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // LoginPost implements POST /login operation.
 //
 // Упрощенный процесс аутентификации путем передачи

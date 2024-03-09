@@ -6,6 +6,14 @@ import (
 	"github.com/go-faster/errors"
 )
 
+func (s DialogUserIDListGetOKApplicationJSON) Validate() error {
+	alias := ([]DialogMessage)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
 func (s UserSearchGetOKApplicationJSON) Validate() error {
 	alias := ([]User)(s)
 	if alias == nil {

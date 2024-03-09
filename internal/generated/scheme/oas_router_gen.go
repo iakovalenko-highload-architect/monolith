@@ -60,6 +60,79 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 			switch elem[0] {
+			case 'd': // Prefix: "dialog/"
+				if l := len("dialog/"); len(elem) >= l && elem[0:l] == "dialog/" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				// Param: "user_id"
+				// Match until "/"
+				idx := strings.IndexByte(elem, '/')
+				if idx < 0 {
+					idx = len(elem)
+				}
+				args[0] = elem[:idx]
+				elem = elem[idx:]
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case '/': // Prefix: "/"
+					if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						break
+					}
+					switch elem[0] {
+					case 'l': // Prefix: "list"
+						if l := len("list"); len(elem) >= l && elem[0:l] == "list" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							// Leaf node.
+							switch r.Method {
+							case "GET":
+								s.handleDialogUserIDListGetRequest([1]string{
+									args[0],
+								}, elemIsEscaped, w, r)
+							default:
+								s.notAllowed(w, r, "GET")
+							}
+
+							return
+						}
+					case 's': // Prefix: "send"
+						if l := len("send"); len(elem) >= l && elem[0:l] == "send" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							// Leaf node.
+							switch r.Method {
+							case "POST":
+								s.handleDialogUserIDSendPostRequest([1]string{
+									args[0],
+								}, elemIsEscaped, w, r)
+							default:
+								s.notAllowed(w, r, "POST")
+							}
+
+							return
+						}
+					}
+				}
 			case 'l': // Prefix: "login"
 				if l := len("login"); len(elem) >= l && elem[0:l] == "login" {
 					elem = elem[l:]
@@ -243,6 +316,83 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 				break
 			}
 			switch elem[0] {
+			case 'd': // Prefix: "dialog/"
+				if l := len("dialog/"); len(elem) >= l && elem[0:l] == "dialog/" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				// Param: "user_id"
+				// Match until "/"
+				idx := strings.IndexByte(elem, '/')
+				if idx < 0 {
+					idx = len(elem)
+				}
+				args[0] = elem[:idx]
+				elem = elem[idx:]
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case '/': // Prefix: "/"
+					if l := len("/"); len(elem) >= l && elem[0:l] == "/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						break
+					}
+					switch elem[0] {
+					case 'l': // Prefix: "list"
+						if l := len("list"); len(elem) >= l && elem[0:l] == "list" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							switch method {
+							case "GET":
+								// Leaf: DialogUserIDListGet
+								r.name = "DialogUserIDListGet"
+								r.summary = ""
+								r.operationID = ""
+								r.pathPattern = "/dialog/{user_id}/list"
+								r.args = args
+								r.count = 1
+								return r, true
+							default:
+								return
+							}
+						}
+					case 's': // Prefix: "send"
+						if l := len("send"); len(elem) >= l && elem[0:l] == "send" {
+							elem = elem[l:]
+						} else {
+							break
+						}
+
+						if len(elem) == 0 {
+							switch method {
+							case "POST":
+								// Leaf: DialogUserIDSendPost
+								r.name = "DialogUserIDSendPost"
+								r.summary = ""
+								r.operationID = ""
+								r.pathPattern = "/dialog/{user_id}/send"
+								r.args = args
+								r.count = 1
+								return r, true
+							default:
+								return
+							}
+						}
+					}
+				}
 			case 'l': // Prefix: "login"
 				if l := len("login"); len(elem) >= l && elem[0:l] == "login" {
 					elem = elem[l:]

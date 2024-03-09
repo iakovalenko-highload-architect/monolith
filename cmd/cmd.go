@@ -83,15 +83,20 @@ func MustInitHasherConfig() hash_manager.Config {
 }
 
 func MustInitTokenManagerConfig() token_manager.Config {
-	var privateKey string
+	var privateKey, publicKey string
 	var ok bool
 
 	if privateKey, ok = os.LookupEnv("TOKEN_PRIVATE_KEY"); !ok {
 		panic("TOKEN_PRIVATE_KEY not set")
 	}
 
+	if publicKey, ok = os.LookupEnv("TOKEN_PUBLIC_KEY"); !ok {
+		panic("TOKEN_PUBLIC_KEY not set")
+	}
+
 	return token_manager.Config{
 		TtlAccessToken: token_manager.TtlAccessTokenDefault,
 		PrivateKey:     privateKey,
+		PublicKey:      publicKey,
 	}
 }
