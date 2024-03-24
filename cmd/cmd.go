@@ -46,6 +46,29 @@ func MustInitPostgresql() *sqlx.DB {
 	return conn
 }
 
+func MustInitPostgresqlRO() *sqlx.DB {
+	conn, err := sqlx.Open(
+		"postgres",
+		fmt.Sprintf(
+			"postgresql://%s:%s@%s:%s/%s?sslmode=%s",
+			os.Getenv("POSTGRES_USER"),
+			os.Getenv("POSTGRES_PASS"),
+			os.Getenv("POSTGRES_HOST_RO"),
+			os.Getenv("POSTGRES_PORT_RO"),
+			os.Getenv("POSTGRES_DBNAME"),
+			os.Getenv("POSTGRES_SSLMODE"),
+		),
+	)
+	if err != nil {
+		panic(err)
+	}
+	if err = conn.Ping(); err != nil {
+		panic(err)
+	}
+
+	return conn
+}
+
 func MustInitHasherConfig() hash_manager.Config {
 	var conf hash_manager.Config
 

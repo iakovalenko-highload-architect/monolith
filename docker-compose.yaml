@@ -1,18 +1,45 @@
 version: '3'
 
 services:
-  db-monolith:
+  db-monolith-master:
     image: postgres:15.1
-    container_name: db-monolith
+    container_name: db-monolith-master
     restart: unless-stopped
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - POSTGRES_DB=master
     volumes:
       - ./db/master/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./volumes/db-monolith-master/:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+  db-monolith-ro-async:
+    image: postgres:15.1
+    container_name: db-monolith-ro-async
+    restart: unless-stopped
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=master
+    volumes:
+      - ./volumes/db-monolith-ro-async/:/var/lib/postgresql/data
     networks:
       - app-network
     ports:
       - "5433:5432"
+  db-monolith-ro-sync:
+    image: postgres:15.1
+    container_name: db-monolith-ro-sync
+    restart: unless-stopped
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=master
+    volumes:
+      - ./volumes/db-monolith-ro-sync/:/var/lib/postgresql/data
+    networks:
+      - app-network
+    ports:
+      - "5434:5432"
 networks:
   app-network:

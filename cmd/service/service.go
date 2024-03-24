@@ -27,6 +27,7 @@ import (
 
 func main() {
 	userStorage := storage.New(cmd.MustInitPostgresql())
+	userStorageRO := storage.New(cmd.MustInitPostgresqlRO())
 
 	dialogClient := dialog.New(os.Getenv("SERVICE_DIALOG_URL"))
 
@@ -43,8 +44,8 @@ func main() {
 
 	loginHandler := login.New(authManager)
 	userRegisterHandler := user_register.New(authManager)
-	userGetByIDHandler := user_get_by_id.New(user_manager.New(userStorage))
-	userSearchHandler := user_search.New(user_manager.New(userStorage))
+	userGetByIDHandler := user_get_by_id.New(user_manager.New(userStorageRO))
+	userSearchHandler := user_search.New(user_manager.New(userStorageRO))
 	dialogUserIdSendHandler := dialog_user_id_send.New(dialogManager)
 	dialogUserIdListHandler := dialog_user_id_list.New(dialogManager)
 
