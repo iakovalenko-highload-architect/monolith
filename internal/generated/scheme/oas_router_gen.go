@@ -133,6 +133,68 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 						}
 					}
 				}
+			case 'f': // Prefix: "friend/"
+				if l := len("friend/"); len(elem) >= l && elem[0:l] == "friend/" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case 'd': // Prefix: "delete/"
+					if l := len("delete/"); len(elem) >= l && elem[0:l] == "delete/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "user_id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "PUT":
+							s.handleFriendDeleteUserIDPutRequest([1]string{
+								args[0],
+							}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "PUT")
+						}
+
+						return
+					}
+				case 's': // Prefix: "set/"
+					if l := len("set/"); len(elem) >= l && elem[0:l] == "set/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "user_id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "PUT":
+							s.handleFriendSetUserIDPutRequest([1]string{
+								args[0],
+							}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "PUT")
+						}
+
+						return
+					}
+				}
 			case 'l': // Prefix: "login"
 				if l := len("login"); len(elem) >= l && elem[0:l] == "login" {
 					elem = elem[l:]
@@ -150,6 +212,122 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					}
 
 					return
+				}
+			case 'p': // Prefix: "post/"
+				if l := len("post/"); len(elem) >= l && elem[0:l] == "post/" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case 'c': // Prefix: "create"
+					if l := len("create"); len(elem) >= l && elem[0:l] == "create" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "POST":
+							s.handlePostCreatePostRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "POST")
+						}
+
+						return
+					}
+				case 'd': // Prefix: "delete/"
+					if l := len("delete/"); len(elem) >= l && elem[0:l] == "delete/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "PUT":
+							s.handlePostDeleteIDPutRequest([1]string{
+								args[0],
+							}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "PUT")
+						}
+
+						return
+					}
+				case 'f': // Prefix: "feed"
+					if l := len("feed"); len(elem) >= l && elem[0:l] == "feed" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "GET":
+							s.handlePostFeedGetRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "GET")
+						}
+
+						return
+					}
+				case 'g': // Prefix: "get/"
+					if l := len("get/"); len(elem) >= l && elem[0:l] == "get/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "GET":
+							s.handlePostGetIDGetRequest([1]string{
+								args[0],
+							}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "GET")
+						}
+
+						return
+					}
+				case 'u': // Prefix: "update"
+					if l := len("update"); len(elem) >= l && elem[0:l] == "update" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						// Leaf node.
+						switch r.Method {
+						case "PUT":
+							s.handlePostUpdatePutRequest([0]string{}, elemIsEscaped, w, r)
+						default:
+							s.notAllowed(w, r, "PUT")
+						}
+
+						return
+					}
 				}
 			case 'u': // Prefix: "user/"
 				if l := len("user/"); len(elem) >= l && elem[0:l] == "user/" {
@@ -393,6 +571,72 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 						}
 					}
 				}
+			case 'f': // Prefix: "friend/"
+				if l := len("friend/"); len(elem) >= l && elem[0:l] == "friend/" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case 'd': // Prefix: "delete/"
+					if l := len("delete/"); len(elem) >= l && elem[0:l] == "delete/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "user_id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						switch method {
+						case "PUT":
+							// Leaf: FriendDeleteUserIDPut
+							r.name = "FriendDeleteUserIDPut"
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/friend/delete/{user_id}"
+							r.args = args
+							r.count = 1
+							return r, true
+						default:
+							return
+						}
+					}
+				case 's': // Prefix: "set/"
+					if l := len("set/"); len(elem) >= l && elem[0:l] == "set/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "user_id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						switch method {
+						case "PUT":
+							// Leaf: FriendSetUserIDPut
+							r.name = "FriendSetUserIDPut"
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/friend/set/{user_id}"
+							r.args = args
+							r.count = 1
+							return r, true
+						default:
+							return
+						}
+					}
+				}
 			case 'l': // Prefix: "login"
 				if l := len("login"); len(elem) >= l && elem[0:l] == "login" {
 					elem = elem[l:]
@@ -413,6 +657,138 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 						return r, true
 					default:
 						return
+					}
+				}
+			case 'p': // Prefix: "post/"
+				if l := len("post/"); len(elem) >= l && elem[0:l] == "post/" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					break
+				}
+				switch elem[0] {
+				case 'c': // Prefix: "create"
+					if l := len("create"); len(elem) >= l && elem[0:l] == "create" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						switch method {
+						case "POST":
+							// Leaf: PostCreatePost
+							r.name = "PostCreatePost"
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/post/create"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+				case 'd': // Prefix: "delete/"
+					if l := len("delete/"); len(elem) >= l && elem[0:l] == "delete/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						switch method {
+						case "PUT":
+							// Leaf: PostDeleteIDPut
+							r.name = "PostDeleteIDPut"
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/post/delete/{id}"
+							r.args = args
+							r.count = 1
+							return r, true
+						default:
+							return
+						}
+					}
+				case 'f': // Prefix: "feed"
+					if l := len("feed"); len(elem) >= l && elem[0:l] == "feed" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						switch method {
+						case "GET":
+							// Leaf: PostFeedGet
+							r.name = "PostFeedGet"
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/post/feed"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
+					}
+				case 'g': // Prefix: "get/"
+					if l := len("get/"); len(elem) >= l && elem[0:l] == "get/" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					// Param: "id"
+					// Leaf parameter
+					args[0] = elem
+					elem = ""
+
+					if len(elem) == 0 {
+						switch method {
+						case "GET":
+							// Leaf: PostGetIDGet
+							r.name = "PostGetIDGet"
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/post/get/{id}"
+							r.args = args
+							r.count = 1
+							return r, true
+						default:
+							return
+						}
+					}
+				case 'u': // Prefix: "update"
+					if l := len("update"); len(elem) >= l && elem[0:l] == "update" {
+						elem = elem[l:]
+					} else {
+						break
+					}
+
+					if len(elem) == 0 {
+						switch method {
+						case "PUT":
+							// Leaf: PostUpdatePut
+							r.name = "PostUpdatePut"
+							r.summary = ""
+							r.operationID = ""
+							r.pathPattern = "/post/update"
+							r.args = args
+							r.count = 0
+							return r, true
+						default:
+							return
+						}
 					}
 				}
 			case 'u': // Prefix: "user/"

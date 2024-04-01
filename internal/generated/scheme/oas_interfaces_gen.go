@@ -9,8 +9,36 @@ type DialogUserIDSendPostRes interface {
 	dialogUserIDSendPostRes()
 }
 
+type FriendDeleteUserIDPutRes interface {
+	friendDeleteUserIDPutRes()
+}
+
+type FriendSetUserIDPutRes interface {
+	friendSetUserIDPutRes()
+}
+
 type LoginPostRes interface {
 	loginPostRes()
+}
+
+type PostCreatePostRes interface {
+	postCreatePostRes()
+}
+
+type PostDeleteIDPutRes interface {
+	postDeleteIDPutRes()
+}
+
+type PostFeedGetRes interface {
+	postFeedGetRes()
+}
+
+type PostGetIDGetRes interface {
+	postGetIDGetRes()
+}
+
+type PostUpdatePutRes interface {
+	postUpdatePutRes()
 }
 
 type UserGetIDGetRes interface {

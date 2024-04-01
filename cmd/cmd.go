@@ -7,6 +7,7 @@ import (
 
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
+	"github.com/redis/go-redis/v9"
 
 	"monolith/internal/usecase/hash_manager"
 	"monolith/internal/usecase/token_manager"
@@ -122,4 +123,15 @@ func MustInitTokenManagerConfig() token_manager.Config {
 		PrivateKey:     privateKey,
 		PublicKey:      publicKey,
 	}
+}
+
+func MustInitRedis() *redis.Client {
+	return redis.NewClient(&redis.Options{
+		Addr: fmt.Sprintf(
+			"%s:%s",
+			os.Getenv("REDIS_HOST"),
+			os.Getenv("REDIS_PORT"),
+		),
+		Password: os.Getenv("REDIS_PASSWORD"),
+	})
 }

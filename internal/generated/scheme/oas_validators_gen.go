@@ -14,6 +14,14 @@ func (s DialogUserIDListGetOKApplicationJSON) Validate() error {
 	return nil
 }
 
+func (s PostFeedGetOKApplicationJSON) Validate() error {
+	alias := ([]Post)(s)
+	if alias == nil {
+		return errors.New("nil is invalid value")
+	}
+	return nil
+}
+
 func (s UserSearchGetOKApplicationJSON) Validate() error {
 	alias := ([]User)(s)
 	if alias == nil {

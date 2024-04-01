@@ -11,3 +11,8 @@ type User struct {
 	City       string
 	Biography  string
 }
+
+type Friendship struct {
+	UserID   string
+	FriendID string
+}
