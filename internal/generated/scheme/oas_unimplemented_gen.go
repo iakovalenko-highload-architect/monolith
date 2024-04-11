@@ -27,6 +27,20 @@ func (UnimplementedHandler) DialogUserIDSendPost(ctx context.Context, req OptDia
 	return r, ht.ErrNotImplemented
 }
 
+// FriendDeleteUserIDPut implements PUT /friend/delete/{user_id} operation.
+//
+// PUT /friend/delete/{user_id}
+func (UnimplementedHandler) FriendDeleteUserIDPut(ctx context.Context, params FriendDeleteUserIDPutParams) (r FriendDeleteUserIDPutRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// FriendSetUserIDPut implements PUT /friend/set/{user_id} operation.
+//
+// PUT /friend/set/{user_id}
+func (UnimplementedHandler) FriendSetUserIDPut(ctx context.Context, params FriendSetUserIDPutParams) (r FriendSetUserIDPutRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
 // LoginPost implements POST /login operation.
 //
 // Упрощенный процесс аутентификации путем передачи
@@ -35,6 +49,41 @@ func (UnimplementedHandler) DialogUserIDSendPost(ctx context.Context, req OptDia
 //
 // POST /login
 func (UnimplementedHandler) LoginPost(ctx context.Context, req OptLoginPostReq) (r LoginPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PostCreatePost implements POST /post/create operation.
+//
+// POST /post/create
+func (UnimplementedHandler) PostCreatePost(ctx context.Context, req OptPostCreatePostReq) (r PostCreatePostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PostDeleteIDPut implements PUT /post/delete/{id} operation.
+//
+// PUT /post/delete/{id}
+func (UnimplementedHandler) PostDeleteIDPut(ctx context.Context, params PostDeleteIDPutParams) (r PostDeleteIDPutRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PostFeedGet implements GET /post/feed operation.
+//
+// GET /post/feed
+func (UnimplementedHandler) PostFeedGet(ctx context.Context, params PostFeedGetParams) (r PostFeedGetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PostGetIDGet implements GET /post/get/{id} operation.
+//
+// GET /post/get/{id}
+func (UnimplementedHandler) PostGetIDGet(ctx context.Context, params PostGetIDGetParams) (r PostGetIDGetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// PostUpdatePut implements PUT /post/update operation.
+//
+// PUT /post/update
+func (UnimplementedHandler) PostUpdatePut(ctx context.Context, req OptPostUpdatePutReq) (r PostUpdatePutRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
 

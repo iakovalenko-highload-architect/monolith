@@ -100,6 +100,32 @@ type DialogUserIDSendPostServiceUnavailable R5xxHeaders
 
 func (*DialogUserIDSendPostServiceUnavailable) dialogUserIDSendPostRes() {}
 
+type FriendDeleteUserIDPutInternalServerError R5xxHeaders
+
+func (*FriendDeleteUserIDPutInternalServerError) friendDeleteUserIDPutRes() {}
+
+// FriendDeleteUserIDPutOK is response for FriendDeleteUserIDPut operation.
+type FriendDeleteUserIDPutOK struct{}
+
+func (*FriendDeleteUserIDPutOK) friendDeleteUserIDPutRes() {}
+
+type FriendDeleteUserIDPutServiceUnavailable R5xxHeaders
+
+func (*FriendDeleteUserIDPutServiceUnavailable) friendDeleteUserIDPutRes() {}
+
+type FriendSetUserIDPutInternalServerError R5xxHeaders
+
+func (*FriendSetUserIDPutInternalServerError) friendSetUserIDPutRes() {}
+
+// FriendSetUserIDPutOK is response for FriendSetUserIDPut operation.
+type FriendSetUserIDPutOK struct{}
+
+func (*FriendSetUserIDPutOK) friendSetUserIDPutRes() {}
+
+type FriendSetUserIDPutServiceUnavailable R5xxHeaders
+
+func (*FriendSetUserIDPutServiceUnavailable) friendSetUserIDPutRes() {}
+
 // LoginPostBadRequest is response for LoginPost operation.
 type LoginPostBadRequest struct{}
 
@@ -251,6 +277,52 @@ func (o OptDialogUserIDSendPostReq) Or(d DialogUserIDSendPostReq) DialogUserIDSe
 	return d
 }
 
+// NewOptFloat64 returns new OptFloat64 with value set to v.
+func NewOptFloat64(v float64) OptFloat64 {
+	return OptFloat64{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptFloat64 is optional float64.
+type OptFloat64 struct {
+	Value float64
+	Set   bool
+}
+
+// IsSet returns true if OptFloat64 was set.
+func (o OptFloat64) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptFloat64) Reset() {
+	var v float64
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptFloat64) SetTo(v float64) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptFloat64) Get() (v float64, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptFloat64) Or(d float64) float64 {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
 // NewOptInt returns new OptInt with value set to v.
 func NewOptInt(v int) OptInt {
 	return OptInt{
@@ -337,6 +409,190 @@ func (o OptLoginPostReq) Get() (v LoginPostReq, ok bool) {
 
 // Or returns value if set, or given parameter if does not.
 func (o OptLoginPostReq) Or(d LoginPostReq) LoginPostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptPostCreatePostReq returns new OptPostCreatePostReq with value set to v.
+func NewOptPostCreatePostReq(v PostCreatePostReq) OptPostCreatePostReq {
+	return OptPostCreatePostReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptPostCreatePostReq is optional PostCreatePostReq.
+type OptPostCreatePostReq struct {
+	Value PostCreatePostReq
+	Set   bool
+}
+
+// IsSet returns true if OptPostCreatePostReq was set.
+func (o OptPostCreatePostReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptPostCreatePostReq) Reset() {
+	var v PostCreatePostReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptPostCreatePostReq) SetTo(v PostCreatePostReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptPostCreatePostReq) Get() (v PostCreatePostReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptPostCreatePostReq) Or(d PostCreatePostReq) PostCreatePostReq {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptPostId returns new OptPostId with value set to v.
+func NewOptPostId(v PostId) OptPostId {
+	return OptPostId{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptPostId is optional PostId.
+type OptPostId struct {
+	Value PostId
+	Set   bool
+}
+
+// IsSet returns true if OptPostId was set.
+func (o OptPostId) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptPostId) Reset() {
+	var v PostId
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptPostId) SetTo(v PostId) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptPostId) Get() (v PostId, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptPostId) Or(d PostId) PostId {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptPostText returns new OptPostText with value set to v.
+func NewOptPostText(v PostText) OptPostText {
+	return OptPostText{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptPostText is optional PostText.
+type OptPostText struct {
+	Value PostText
+	Set   bool
+}
+
+// IsSet returns true if OptPostText was set.
+func (o OptPostText) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptPostText) Reset() {
+	var v PostText
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptPostText) SetTo(v PostText) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptPostText) Get() (v PostText, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptPostText) Or(d PostText) PostText {
+	if v, ok := o.Get(); ok {
+		return v
+	}
+	return d
+}
+
+// NewOptPostUpdatePutReq returns new OptPostUpdatePutReq with value set to v.
+func NewOptPostUpdatePutReq(v PostUpdatePutReq) OptPostUpdatePutReq {
+	return OptPostUpdatePutReq{
+		Value: v,
+		Set:   true,
+	}
+}
+
+// OptPostUpdatePutReq is optional PostUpdatePutReq.
+type OptPostUpdatePutReq struct {
+	Value PostUpdatePutReq
+	Set   bool
+}
+
+// IsSet returns true if OptPostUpdatePutReq was set.
+func (o OptPostUpdatePutReq) IsSet() bool { return o.Set }
+
+// Reset unsets value.
+func (o *OptPostUpdatePutReq) Reset() {
+	var v PostUpdatePutReq
+	o.Value = v
+	o.Set = false
+}
+
+// SetTo sets value to v.
+func (o *OptPostUpdatePutReq) SetTo(v PostUpdatePutReq) {
+	o.Set = true
+	o.Value = v
+}
+
+// Get returns value and boolean that denotes whether value was set.
+func (o OptPostUpdatePutReq) Get() (v PostUpdatePutReq, ok bool) {
+	if !o.Set {
+		return v, false
+	}
+	return o.Value, true
+}
+
+// Or returns value if set, or given parameter if does not.
+func (o OptPostUpdatePutReq) Or(d PostUpdatePutReq) PostUpdatePutReq {
 	if v, ok := o.Get(); ok {
 		return v
 	}
@@ -481,17 +737,170 @@ func (o OptUserRegisterPostReq) Or(d UserRegisterPostReq) UserRegisterPostReq {
 	return d
 }
 
+// Пост пользователя.
+// Ref: #/components/schemas/Post
+type Post struct {
+	ID           OptPostId   `json:"id"`
+	Text         OptPostText `json:"text"`
+	AuthorUserID OptUserId   `json:"author_user_id"`
+}
+
+// GetID returns the value of ID.
+func (s *Post) GetID() OptPostId {
+	return s.ID
+}
+
+// GetText returns the value of Text.
+func (s *Post) GetText() OptPostText {
+	return s.Text
+}
+
+// GetAuthorUserID returns the value of AuthorUserID.
+func (s *Post) GetAuthorUserID() OptUserId {
+	return s.AuthorUserID
+}
+
+// SetID sets the value of ID.
+func (s *Post) SetID(val OptPostId) {
+	s.ID = val
+}
+
+// SetText sets the value of Text.
+func (s *Post) SetText(val OptPostText) {
+	s.Text = val
+}
+
+// SetAuthorUserID sets the value of AuthorUserID.
+func (s *Post) SetAuthorUserID(val OptUserId) {
+	s.AuthorUserID = val
+}
+
+func (*Post) postGetIDGetRes() {}
+
+type PostCreatePostInternalServerError R5xxHeaders
+
+func (*PostCreatePostInternalServerError) postCreatePostRes() {}
+
+type PostCreatePostReq struct {
+	Text PostText `json:"text"`
+}
+
+// GetText returns the value of Text.
+func (s *PostCreatePostReq) GetText() PostText {
+	return s.Text
+}
+
+// SetText sets the value of Text.
+func (s *PostCreatePostReq) SetText(val PostText) {
+	s.Text = val
+}
+
+type PostCreatePostServiceUnavailable R5xxHeaders
+
+func (*PostCreatePostServiceUnavailable) postCreatePostRes() {}
+
+type PostDeleteIDPutInternalServerError R5xxHeaders
+
+func (*PostDeleteIDPutInternalServerError) postDeleteIDPutRes() {}
+
+// PostDeleteIDPutOK is response for PostDeleteIDPut operation.
+type PostDeleteIDPutOK struct{}
+
+func (*PostDeleteIDPutOK) postDeleteIDPutRes() {}
+
+type PostDeleteIDPutServiceUnavailable R5xxHeaders
+
+func (*PostDeleteIDPutServiceUnavailable) postDeleteIDPutRes() {}
+
+type PostFeedGetInternalServerError R5xxHeaders
+
+func (*PostFeedGetInternalServerError) postFeedGetRes() {}
+
+type PostFeedGetOKApplicationJSON []Post
+
+func (*PostFeedGetOKApplicationJSON) postFeedGetRes() {}
+
+type PostFeedGetServiceUnavailable R5xxHeaders
+
+func (*PostFeedGetServiceUnavailable) postFeedGetRes() {}
+
+type PostGetIDGetInternalServerError R5xxHeaders
+
+func (*PostGetIDGetInternalServerError) postGetIDGetRes() {}
+
+type PostGetIDGetServiceUnavailable R5xxHeaders
+
+func (*PostGetIDGetServiceUnavailable) postGetIDGetRes() {}
+
+type PostId string
+
+func (*PostId) postCreatePostRes() {}
+
+type PostText string
+
+type PostUpdatePutInternalServerError R5xxHeaders
+
+func (*PostUpdatePutInternalServerError) postUpdatePutRes() {}
+
+// PostUpdatePutOK is response for PostUpdatePut operation.
+type PostUpdatePutOK struct{}
+
+func (*PostUpdatePutOK) postUpdatePutRes() {}
+
+type PostUpdatePutReq struct {
+	ID   PostId   `json:"id"`
+	Text PostText `json:"text"`
+}
+
+// GetID returns the value of ID.
+func (s *PostUpdatePutReq) GetID() PostId {
+	return s.ID
+}
+
+// GetText returns the value of Text.
+func (s *PostUpdatePutReq) GetText() PostText {
+	return s.Text
+}
+
+// SetID sets the value of ID.
+func (s *PostUpdatePutReq) SetID(val PostId) {
+	s.ID = val
+}
+
+// SetText sets the value of Text.
+func (s *PostUpdatePutReq) SetText(val PostText) {
+	s.Text = val
+}
+
+type PostUpdatePutServiceUnavailable R5xxHeaders
+
+func (*PostUpdatePutServiceUnavailable) postUpdatePutRes() {}
+
 // Ref: #/components/responses/400
 type R400 struct{}
 
-func (*R400) dialogUserIDListGetRes()  {}
-func (*R400) dialogUserIDSendPostRes() {}
+func (*R400) dialogUserIDListGetRes()   {}
+func (*R400) dialogUserIDSendPostRes()  {}
+func (*R400) friendDeleteUserIDPutRes() {}
+func (*R400) friendSetUserIDPutRes()    {}
+func (*R400) postCreatePostRes()        {}
+func (*R400) postDeleteIDPutRes()       {}
+func (*R400) postFeedGetRes()           {}
+func (*R400) postGetIDGetRes()          {}
+func (*R400) postUpdatePutRes()         {}
 
 // Ref: #/components/responses/401
 type R401 struct{}
 
-func (*R401) dialogUserIDListGetRes()  {}
-func (*R401) dialogUserIDSendPostRes() {}
+func (*R401) dialogUserIDListGetRes()   {}
+func (*R401) dialogUserIDSendPostRes()  {}
+func (*R401) friendDeleteUserIDPutRes() {}
+func (*R401) friendSetUserIDPutRes()    {}
+func (*R401) postCreatePostRes()        {}
+func (*R401) postDeleteIDPutRes()       {}
+func (*R401) postFeedGetRes()           {}
+func (*R401) postGetIDGetRes()          {}
+func (*R401) postUpdatePutRes()         {}
 
 type R5xx struct {
 	// Описание ошибки.

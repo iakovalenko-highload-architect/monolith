@@ -16,6 +16,14 @@ type Handler interface {
 	//
 	// POST /dialog/{user_id}/send
 	DialogUserIDSendPost(ctx context.Context, req OptDialogUserIDSendPostReq, params DialogUserIDSendPostParams) (DialogUserIDSendPostRes, error)
+	// FriendDeleteUserIDPut implements PUT /friend/delete/{user_id} operation.
+	//
+	// PUT /friend/delete/{user_id}
+	FriendDeleteUserIDPut(ctx context.Context, params FriendDeleteUserIDPutParams) (FriendDeleteUserIDPutRes, error)
+	// FriendSetUserIDPut implements PUT /friend/set/{user_id} operation.
+	//
+	// PUT /friend/set/{user_id}
+	FriendSetUserIDPut(ctx context.Context, params FriendSetUserIDPutParams) (FriendSetUserIDPutRes, error)
 	// LoginPost implements POST /login operation.
 	//
 	// Упрощенный процесс аутентификации путем передачи
@@ -24,6 +32,26 @@ type Handler interface {
 	//
 	// POST /login
 	LoginPost(ctx context.Context, req OptLoginPostReq) (LoginPostRes, error)
+	// PostCreatePost implements POST /post/create operation.
+	//
+	// POST /post/create
+	PostCreatePost(ctx context.Context, req OptPostCreatePostReq) (PostCreatePostRes, error)
+	// PostDeleteIDPut implements PUT /post/delete/{id} operation.
+	//
+	// PUT /post/delete/{id}
+	PostDeleteIDPut(ctx context.Context, params PostDeleteIDPutParams) (PostDeleteIDPutRes, error)
+	// PostFeedGet implements GET /post/feed operation.
+	//
+	// GET /post/feed
+	PostFeedGet(ctx context.Context, params PostFeedGetParams) (PostFeedGetRes, error)
+	// PostGetIDGet implements GET /post/get/{id} operation.
+	//
+	// GET /post/get/{id}
+	PostGetIDGet(ctx context.Context, params PostGetIDGetParams) (PostGetIDGetRes, error)
+	// PostUpdatePut implements PUT /post/update operation.
+	//
+	// PUT /post/update
+	PostUpdatePut(ctx context.Context, req OptPostUpdatePutReq) (PostUpdatePutRes, error)
 	// UserGetIDGet implements GET /user/get/{id} operation.
 	//
 	// Получение анкеты пользователя.
