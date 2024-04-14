@@ -8,6 +8,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
+	"github.com/wagslane/go-rabbitmq"
 
 	"monolith/internal/usecase/hash_manager"
 	"monolith/internal/usecase/token_manager"
@@ -134,4 +135,21 @@ func MustInitRedis() *redis.Client {
 		),
 		Password: os.Getenv("REDIS_PASSWORD"),
 	})
+}
+
+func MustInitRabbit() *rabbitmq.Conn {
+	rabbit, err := rabbitmq.NewConn(
+		fmt.Sprintf(
+			"amqp://%s:%s@%s",
+			os.Getenv("RM_USERNAME"),
+			os.Getenv("RM_PASSWORD"),
+			os.Getenv("RM_HOST"),
+		),
+		rabbitmq.WithConnectionOptionsLogging,
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	return rabbit
 }

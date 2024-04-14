@@ -2,24 +2,29 @@ package post_manager
 
 import (
 	"context"
+	"encoding/json"
 
 	"github.com/go-faster/errors"
+	"github.com/wagslane/go-rabbitmq"
 
 	feedCache "monolith/internal/cache"
 	"monolith/internal/models"
+	components "monolith/internal/schema/components/post"
 )
 
 type PostManager struct {
 	storage      storage
 	cache        cache
 	friendGetter friendGetter
+	publisher    *rabbitmq.Publisher
 }
 
-func New(storage storage, cache cache, friendGetter friendGetter) *PostManager {
+func New(storage storage, cache cache, friendGetter friendGetter, publisher *rabbitmq.Publisher) *PostManager {
 	return &PostManager{
 		storage:      storage,
 		cache:        cache,
 		friendGetter: friendGetter,
+		publisher:    publisher,
 	}
 }
 
@@ -37,6 +42,28 @@ func (p *PostManager) Create(ctx context.Context, post models.Post) (string, err
 	for _, friend := range friends {
 		if err := p.cache.Append(ctx, friend.UserID, post); err != nil {
 			return "", errors.Wrap(err, "append post in friend cache error")
+		}
+
+		msg, err := json.Marshal(components.Post{
+			PostID:           components.ID(post.ID),
+			PostText:         components.Text(post.Text),
+			PostAuthorUserID: components.UserID(post.UserID),
+		})
+		if err != nil {
+			return "", errors.Wrap(err, "marshal post component error")
+		}
+
+		err = p.publisher.PublishWithContext(
+			context.Background(),
+			msg,
+			[]string{friend.UserID},
+			rabbitmq.WithPublishOptionsContentType("application/json"),
+			rabbitmq.WithPublishOptionsMandatory,
+			rabbitmq.WithPublishOptionsPersistentDelivery,
+			rabbitmq.WithPublishOptionsExchange("post-created"),
+		)
+		if err != nil {
+			return "", errors.Wrap(err, "publish post error")
 		}
 	}
 

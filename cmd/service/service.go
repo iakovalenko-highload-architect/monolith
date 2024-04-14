@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/lib/pq"
+	"github.com/wagslane/go-rabbitmq"
 
 	"monolith/cmd"
 	"monolith/internal/api/handlers/dialog_user_id_list"
@@ -38,10 +39,26 @@ import (
 
 func main() {
 	ctx := context.Background()
+
 	storage := db.New(cmd.MustInitPostgresql())
 	storageRO := db.New(cmd.MustInitPostgresqlRO())
 
 	feedCache := cache.New(cmd.MustInitRedis())
+
+	rabbit := cmd.MustInitRabbit()
+	defer rabbit.Close()
+
+	publisher, err := rabbitmq.NewPublisher(
+		rabbit,
+		rabbitmq.WithPublisherOptionsLogging,
+		rabbitmq.WithPublisherOptionsExchangeName("post-created"),
+		rabbitmq.WithPublisherOptionsExchangeKind("topic"),
+		rabbitmq.WithPublisherOptionsExchangeDeclare,
+	)
+	if err != nil {
+		panic(err)
+	}
+	defer publisher.Close()
 
 	dialogClient := dialog.New(os.Getenv("SERVICE_DIALOG_URL"))
 
@@ -50,7 +67,7 @@ func main() {
 	authManager := auth_manager.New(storage, hashManager, tokenManager)
 	dialogManager := dialog_manager.New(storage, dialogClient)
 	friendManager := friend_manager.New(storage)
-	postManager := post_manager.New(storage, feedCache, friendManager)
+	postManager := post_manager.New(storage, feedCache, friendManager, publisher)
 	if err := postManager.InitFeedCache(ctx); err != nil {
 		panic(err)
 	}

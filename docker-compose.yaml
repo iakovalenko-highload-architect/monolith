@@ -1,16 +1,16 @@
 version: '3'
 
 services:
-  monolith:
-    image: ghcr.io/iakovalenko-highload-architect/monolith:latest
-    container_name: monolith
-    restart: unless-stopped
-    volumes:
-      - ./.env:/project/.env
-    networks:
-      - app-network
-    ports:
-      - "8080:8080"
+#  monolith:
+#    image: ghcr.io/iakovalenko-highload-architect/monolith:latest
+#    container_name: monolith
+#    restart: unless-stopped
+#    volumes:
+#      - ./.env:/project/.env
+#    networks:
+#      - app-network
+#    ports:
+#      - "8080:8080"
   db-monolith-master:
     image: postgres:15.1
     container_name: db-monolith-master
